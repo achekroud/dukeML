@@ -1,7 +1,7 @@
 # Adam's package installer
 
-wants <- c("dplyr", "ggplot2", "RColorBrewer", "glmnet", "caret", "pROC", "permute", "gbm",
-           "klaR", "plyr", "foreach", "doMC")
+wants <- c("dplyr", "ggplot2", "RColorBrewer", "glmnet", "caret", "pROC", "permute", "gbm","klaR", "plyr", "foreach", "doMC")
+
 has   <- wants %in% rownames(installed.packages())
 
 if(any(!has)) install.packages(wants[!has])
@@ -17,5 +17,4 @@ if(all(check == TRUE)){
 }
 
 
-# library(c("dplyr", "ggplot2", "RColorBrewer", "glmnet", "caret", "pROC", "permute", "gbm",
-"klaR", "plyr", "foreach", "doMC"))
+# library(c("dplyr", "ggplot2", "RColorBrewer", "glmnet", "caret", "pROC", "permute", "gbm","klaR", "plyr", "foreach", "doMC"))
