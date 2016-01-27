@@ -288,10 +288,13 @@ getTrainPerf(mod6.1) # back up to 92% !
 
 ## live demo we can do external validation of our fave model and see whether it was actually good or not
 
+# read in the test data
+
 testData <- read.csv("data/workshopTest.csv", as.is=TRUE)
 testData$X <- NULL
 testData$Sex <- as.factor(testData$Sex)
 ext <- testData[,-1]
+
 
 
 
@@ -303,6 +306,7 @@ confusionMatrix(data = sexPredictions, reference = as.factor(ext$Sex))
 
 # yay! this was great. our model got 93% on unseen data.
 # next step would be to get a new data set to externally validate the finding
+# what do you think about this model? good? real? why?
 
 
 
