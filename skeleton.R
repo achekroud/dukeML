@@ -25,7 +25,7 @@ raw$Sex <- as.factor(raw$Sex)
 df <- raw[,-1]
 
 ## View data in Rstudio
-View(df)
+# View(df)
 
 ## View top of data frame in console
 head(df[,1:8])
@@ -109,7 +109,6 @@ sbf1 <- sbf(x = as.matrix(df[,2:390]), y = as.factor(df$Sex),
 ## Better approach, since this was computationally awful, might be to just 
 #     use an actual model to rank features, using just a subset of the data
 
-
 # There is a function called createDataPartition that creates random 
 #   splits of the data, and balances class outcomes between the two splits
 set.seed(1)    # this means that we can get the same random split next time
@@ -138,6 +137,8 @@ coef(mod.sub$finalModel) %>% head()
 
 
 
+
+
 #####
 
 ##  Next we will learn how to fit other models using cross-validation
@@ -150,12 +151,34 @@ coef(mod.sub$finalModel) %>% head()
 #   We will give these instructions to the train command later.
 cvCtrl <- trainControl(method = "cv", number = 10)   # see help for other CV
 
-## Train a model
+
+### The train command is the core function in caret
+##      it ties everything together in an **extremely** convenient wrapper
+
+## Pseudocode train command (for humans to read)
+# 
+# modelStructure <-             ### you need to save all the stuff you build!
+#     train (                   ### caret::train function
+#     predictors as a matrix    ### x-matrix
+#     target as a factor        ### dependent variable/target
+#     what algorithm are you using?  ### method = "thing"
+#     any cross-validation instructions? 
+#     ))
+
+
+# lets see this in practice!
+
 mod1 <- train(x= as.matrix(df[,2:390]),
               y = as.factor(df$Sex),
               method = "lda",
               trControl = cvCtrl)
-getTrainPerf(mod1) #not bad! average cross-validated performance
+
+## inspect structure of model we built (broadly, don't worry too much)
+
+## remember getTrainPerf?
+getTrainPerf(mod1) #not bad! this is the average cross-validated performance
+
+
 
 ## Once you have the framework set up, changing algorithm is trivial
 #   Here is an SVM
@@ -192,13 +215,25 @@ for (i in names(t)){
 names(m)[1:5]
 
 
+
 ## You can also change the cross-validation framework FYI
 
 mod5 <- train(x= as.matrix(df[,2:390]),
               y = as.factor(df$Sex),
               method = "ctree",
               trControl = trainControl(method="LOOCV"))
+getTrainPerf(mod5)  # I told you it was slow.
+
+# really slow. don't run it.
+
+
+# how about 5-fold validation?
+mod5 <- train(x= as.matrix(df[,2:390]),
+              y = as.factor(df$Sex),
+              method = "ctree",
+              trControl = trainControl(method="cv", number=5))
 getTrainPerf(mod5)
+print(mod5)
 
 
 
@@ -207,7 +242,67 @@ getTrainPerf(mod5)
 
 
 
+#### Advanced
+## We mentioned briefly in the workshop that some algorithms require tuning
+#    Best way to do this is to pre-specify a grid of all the parameter
+#    combinations that you want to try, and choose the best through CV
 
+# Hyperparameter grid (aka tuning grid) can be set up easily
+# Example with radial SVM 
+#   - visit caret docs for detail:
+#     http://topepo.github.io/caret/modelList.html
+
+svmGrid <- expand.grid(.sigma = c(1, 0.1, 0.05),
+                       .C = c(1.0, 0.5, 0.1))
+
+# We just have to pass this tuning grid to the train command (w/ CV)
+
+# Tying it all together
+
+mod6 <- train(x = as.matrix(df[,2:390]),
+              y = as.factor(df$Sex),
+              method = "svmRadial",
+              tuneGrid = svmGrid,
+              trControl = cvCtrl)
+getTrainPerf(mod6) # wow, that sucked. why?
+
+print(mod6) # Inspect the model summary
+# not looking pretty, seems to have defaulted to the majority class
+# this is always a bad sign.
+
+# can you think why this might have happened?
+
+mod6.1 <- train(x = as.matrix(df[,2:390]),
+              y = as.factor(df$Sex),
+              method = "svmRadial",
+              trControl = cvCtrl)
+getTrainPerf(mod6.1) # back up to 92% !
+
+# can you spot the problem?
+
+# it takes time/experience to get used to tuning algorithms.
+# often safer just to let caret pick some defaults for you.
+
+
+
+
+## live demo we can do external validation of our fave model and see whether it was actually good or not
+
+testData <- read.csv("data/workshopTest.csv", as.is=TRUE)
+testData$X <- NULL
+testData$Sex <- as.factor(testData$Sex)
+ext <- testData[,-1]
+
+
+
+### The caret model structure can be used to predict new outcomes 
+##       NB: can discuss exactly how offline
+sexPredictions <- predict(mod6.1,
+                          newdata = as.matrix(ext[,2:390]))
+confusionMatrix(data = sexPredictions, reference = as.factor(ext$Sex))
+
+# yay! this was great. our model got 93% on unseen data.
+# next step would be to get a new data set to externally validate the finding
 
 
 
