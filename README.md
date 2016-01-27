@@ -15,17 +15,17 @@
 
 There are also some scripts
 
-1. basic_R.R
+1. **basic_R.R**
   - Contains some very introductory R code.
   - If you have used R before then you won't need to read it
   - If you are new to R then it may help give you an idea of syntax
-2. dukePackageInstaller.R
+2. **dukePackageInstaller.R**
   - Should install the main R packages we will be using.
   - You should be able to source the script directly, and it will indicate whether it was likely to work
     - to do this type `source dukePackageInstaller.R` into your terminal. 
     - if it worked, it should return "This probably worked as expected"
   - Either way, if you read the code it should be fairly easy to see which packages you need to install manually
-3. skeleton.R
+3. **skeleton.R**
   - Contains the main demonstration script that we will be working through.
   
   
