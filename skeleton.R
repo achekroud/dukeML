@@ -5,9 +5,14 @@
 
 
 
+##############
+##############
+######### Set working directory to the repository you downloaded
 
-## Set working directory to the repository you downloaded
 setwd("~/Documents/PhD/PhD_Core/Teaching/MLworkshop/dukeWorkshop")
+
+##############
+##############
 
 # Load libraries
 libs <- c("ggplot2", "RColorBrewer", "glmnet", "caret", "pROC", "permute", "gbm",
