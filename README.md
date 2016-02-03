@@ -5,7 +5,9 @@
 ----------------------------------------
 
 
-- This repository contains the materials that will be used during a two-day machine learning workshop at Duke.
+- This repository contains the materials that will be used during a two-day machine learning workshop at Duke. This workshop will serve as a theoretical and practical introduction to using machine learning methods to solve clinically important problems. It takes a high-level approach, with almost no equations, and uses examples drawn from various areas of biology.
+
+- The materials are all available for free (yay, science!), but please do cite our paper and let me know if you find any of this useful!
 
 - You will find folders inside containing:
   - an example data set
@@ -43,5 +45,5 @@ The appropriate citation for these materials is:
 
 Please do not share or reuse these materials without permission.
 I have no copyright, nor do I have money to pay lawyers to do anything about it,
-but I will be sad, and tweet everyone I know to tell them you were naughty.
+but I will be sad, and [tweet](https://twitter.com/itschekkers) everyone I know to tell them you were naughty.
     
