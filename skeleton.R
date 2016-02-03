@@ -50,7 +50,7 @@ glm(Sex ~ ., family = "binomial", data = df) %>% summary
 # Try a PCA?
 df.pc <- prcomp(df[,-1])$x %>% as.data.frame()
 # Take top 60 components (guess)
-df.pc <- df.pc[,1:60]
+df.pc <- df.pc[,1:50]
 # Put sex back in
 df.pc$Sex <- df$Sex
 
@@ -74,7 +74,7 @@ confusionMatrix(data = pc.LR.out, reference = df.pc$Sex)
 # Lets try a univariate filter (Pearson correlation)
 
 # correlate each variable with the outcome
-correlations <- sapply(names(df)[3:390], function(i) cor(as.numeric(df[,i]),as.numeric(df$Sex)))
+correlations <- sapply(names(df)[3:390], function(i) cor(as.numeric(df[,i]), as.numeric(df$Sex)))
 # what happened?
 summary(correlations)
 # plenty of signal. keep |z| > 0.5?
@@ -194,6 +194,7 @@ mod2 <- train(x= as.matrix(df[,2:390]),
 getTrainPerf(mod2) # SVM numerically worse than LDA
 
 #   Here is k-NN
+set.seed(2)
 mod3 <- train(x= as.matrix(df[,2:390]),
               y = as.factor(df$Sex),
               method = "knn",
@@ -203,7 +204,7 @@ getTrainPerf(mod3) # kNN was fast but lame
 # Sometimes you need additional libraries to run certain non-standard models
 mod4 <- train(x= as.matrix(df[,2:390]),
               y = as.factor(df$Sex),
-              method = "ctree",
+              method = "ada",
               trControl = cvCtrl)
 getTrainPerf(mod4) # single decision tree also weaker.
 
@@ -240,6 +241,9 @@ mod5 <- train(x= as.matrix(df[,2:390]),
 getTrainPerf(mod5)
 print(mod5)
 
+## Jae's tree plotting code
+plot(mod5$finalModel)
+plot(mod5$finalModel, type="simple")
 
 
 
