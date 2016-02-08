@@ -41,7 +41,7 @@ Please feel free to email me if you have any questions: adam dot chekroud at yal
 
 The appropriate citation for these materials is: 
 
-> Chekroud AM, et al. (2016) Cross-trial prediction of treatment outcome in depression: a machine learning approach. The Lancet Psychiatry 0366(15):1–8.  [Available here](dx.doi.org/10.1016/S2215-0366(15)00471-X)
+> Chekroud AM, et al. (2016) Cross-trial prediction of treatment outcome in depression: a machine learning approach. The Lancet Psychiatry 0366(15):1–8.  [Available here](http://lancet.com/journals/lanpsy/article/PIIS2215-0366(15)00471-X/fulltext)
 
 Please do not share or reuse these materials without permission.
 I have no copyright, nor do I have money to pay lawyers to do anything about it,
