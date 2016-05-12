@@ -37,7 +37,7 @@ As a reminder:
 - And install the latest version of Rstudio for free [here](https://www.rstudio.com/products/rstudio/#Desktop)
 
 
-Please feel free to email me if you have any questions: adam dot chekroud at yale dot edu
+Please feel free to email me if you have any questions, or if you spot anything that isn't working: adam dot chekroud at yale dot edu
 
 The appropriate citation for these materials is: 
 
